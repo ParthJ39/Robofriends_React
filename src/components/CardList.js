@@ -1,6 +1,7 @@
 import Card from './Card'
 
 const CardList = ({robots}) =>{
+	
 		return(
 			<div>
 				{
@@ -17,5 +18,5 @@ const CardList = ({robots}) =>{
 	            }
             </div>
          );
-  }
+     }
 export default CardList;
