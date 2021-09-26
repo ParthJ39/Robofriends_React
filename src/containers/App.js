@@ -3,7 +3,44 @@ import Scroll from '../components/Scroll'
 import CardList from '../components/CardList';
 import ErrorBoundary from '../components/ErrorBoundary'
 import SearchBox from '../components/SearchBox';
+import Particles from 'react-particles-js';
 import './App.css'
+
+const particlesOptions = {
+particles: {
+	            number: {
+	                value: 300,
+	                density: {
+	                    enable: true,
+	                    value_area: 1000
+	                }
+	            },
+	            color: {
+	                value: '#fff'
+	            },
+	            opacity: {
+	                value: 0.4,
+	                anim: {
+	                    enable: true
+	                }
+	            },
+	            size: {
+	                value: 7,
+	                random: true,
+	                anim: {
+	                    enable: true,
+	                    speed: 3
+	                }
+	            },
+	            line_linked: {
+	                enable: false
+	            },
+	            move: {
+	                speed: 0.3
+	            }
+	         }    
+}
+
 
 class App extends Component{
 	constructor(){
@@ -40,6 +77,7 @@ class App extends Component{
 			 <h1>Loading</h1> :
                 (
 					<div className='tc'>
+					     <Particles className="particles" params={particlesOptions} />
 						<h1 className='f1'> Friends for All</h1>
 						<SearchBox searchChange={this.onSearchChange}/>
 						<Scroll>

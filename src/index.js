@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
+import Particles from 'react-particles-js';
 import 'tachyons';
 ReactDOM.render(
   <React.StrictMode>
