@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import Scroll from '../components/Scroll'
 import CardList from '../components/CardList';
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -25,50 +25,41 @@ particles: {
 	                }
 	            },
 	            size: {
-	                value: 7,
+	                value: 5,
 	                random: true,
 	                anim: {
 	                    enable: true,
-	                    speed: 3
+	                    speed: 2
 	                }
 	            },
 	            line_linked: {
 	                enable: false
 	            },
 	            move: {
-	                speed: 0.3
+	                speed: 0.2
 	            }
 	         }    
 }
 
 
-class App extends Component{
-	constructor(){
-		super()
-		this.state = {
-			robots: [],
-			searchfield: ''
-		}
-	}
+function App() {
+	
+	// This is the place where we create hooks, here we create state hook
+	//     stateName      functionTOChangeState    initial value for the state
+    const [robots,            setRobots        ] = useState([])
+	const [searchfield,       setSearchfield   ] = useState('')
 
+	// In hooks instead of ComponentDidMount we use Effect hook
+	useEffect(() => {
+		fetch('https://jsonplaceholder.typicode.com/users')
+		.then(response => response.json())
+		.then(users => {setRobots(users)});
+	},[]) // Here we put [] run effect when list is empty i.e. when the componenet mounts(its a shorthand version to use componentDidMount using Hooks)
 
-	async componentDidMount(){
-		try{
-		const resp = await fetch('https://jsonplaceholder.typicode.com/users');
-		const users = await resp.json();
-		this.setState({robots: users})
-	    } catch(err){
-	    	console.log("Sorry for the Error",err)
-	    }
-		      
+	const onSearchChange = (event) => {
+		setSearchfield(event.target.value)
 	 }
 
-	onSearchChange = (event) => {
-		this.setState({searchfield: event.target.value})
-	 }
-
-	render(){
-		const {robots, searchfield} = this.state;
 		const filteredRobots = robots.filter(robot =>{
 			  return robot.name.toLowerCase().includes(searchfield.toLowerCase())
 		    })
@@ -79,7 +70,7 @@ class App extends Component{
 					<div className='tc'>
 					     <Particles className="particles" params={particlesOptions} />
 						<h1 className='f1'> Friends for All</h1>
-						<SearchBox searchChange={this.onSearchChange}/>
+						<SearchBox searchChange={onSearchChange}/>
 						<Scroll>
 							  <ErrorBoundary>
 							     <CardList robots={filteredRobots} />
@@ -87,7 +78,7 @@ class App extends Component{
 						</Scroll>
 					</div>
                  );
-	 }
-}
+	}
+
 
 export default App;
